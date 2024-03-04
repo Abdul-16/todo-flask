@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% block body %}
+<div class="container">
+  <form action="/" method="POST">
+    <div class="mb-3 my-2">
+      <label for="text" class="form-label">Title</label>
+      <input
+        type="text"
+        name="title"
+        class="form-control"
+        id="title"
+        aria-describedby="emailHelp"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="desc" class="form-label">Description</label>
+      <input type="text" name="desc" class="form-control" id="desc" />
+    </div>
+    <button type="submit" class="btn btn-outline-primary">Submit</button>
+  </form>
+
+  <table class="table table-striped mx-8">
+    <tbody>
+      {%if allTodo|length==0%}
+      <div class="alert alert-warning my-3" role="alert">
+        There are no records of any To do.
+      </div>
+      {%else%}
+      <thead>
+        <tr>
+          <th scope="col">Sr No.</th>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Timestamp</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      {% for todo in allTodo %}
+      <tr>
+        <th scope="row">{{loop.index}}</th>
+        <td>{{todo.title}}</td>
+        <td>{{todo.desc}}</td>
+        <td>{{todo.date}}</td>
+        <td>
+          <a
+            href="/update/{{todo.srno}}"
+            type="button"
+            class="btn btn-outline-secondary mx-4"
+          >
+            Update</a
+          ><a
+            href="/delete/{{todo.srno}}"
+            type="button"
+            class="btn btn-outline-danger"
+            >Delete</a
+          >
+        </td>
+      </tr>
+      {% endfor %} {% endif %}
+    </tbody>
+  </table>
+</div>
+{% endblock body %}
